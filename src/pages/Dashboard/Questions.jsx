@@ -43,7 +43,7 @@ const Questions = () => {
      let postBody1 = JSON.parse(localStorage.getItem('productData'));
      let amount = (postBody1.products.length)*100;
      
-     const API_URL ='http://localhost:3030/api/user/';
+     const API_URL ='http://13.232.14.0:5000/api/user/';
      e.preventDefault();
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
