@@ -3,7 +3,7 @@ import AllRoutes from ".";
 
 const AppRoutes = () => {
   return (
-    <BrowserRouter>
+    <BrowserRouter basename="/account/login">
       <AllRoutes></AllRoutes>
     </BrowserRouter>
   );
