@@ -129,7 +129,7 @@ class RestClient {
   }
 
   static async postRequest2(url, postBody) {
-    var url1= 'http://13.232.14.0:5000/api/'+url;
+    var url1= 'http://3.111.197.50:5000/api/'+url;
 
     store.dispatch(SetLoading());
     return await axios
