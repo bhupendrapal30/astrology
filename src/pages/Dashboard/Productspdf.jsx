@@ -70,7 +70,7 @@ const Productspdf = (): React$Element<any> => {
       console.log(parseInt(postBody1));
      let amount = (amt.length)*100;
      alert(amount);
-     const API_URL ='http://3.111.197.50:5000/api/user/';
+     const API_URL ='http://13.232.4.61:5000/api/user/';
      e.preventDefault();
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
