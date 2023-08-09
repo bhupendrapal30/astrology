@@ -136,6 +136,7 @@ img {
     z-index: -1;
 }
 input[type="text"],
+input[type="time"],
 input[type="email"],
 input[type="Password"],
 input[type="date"],
@@ -913,6 +914,21 @@ background-color: #3688fc;
 
 @keyframes s3 {to{transform: rotate(1turn)}}
 
+input[type="time"]
+{
+     font-size: 17px;
+    font-weight: 500;
+    color: #fff;
+    text-align: left;
+    padding: 18px 18px 20px 42px;
+    width: 100%;
+    display: inline-block;
+    box-sizing: border-box;
+    border: none;
+    outline: none;
+    background: transparent;
+    letter-spacing: .5px;
+}
 
 select {
     font-size: 17px;
@@ -931,4 +947,15 @@ select {
 
 option {
     color: #000000;
+}
+input[type="date"],input[type="time"]::-webkit-calendar-picker-indicator {
+  cursor: pointer;
+  border-radius: 4px;
+  margin-right: 2px;
+  opacity: 0.6;
+  filter: invert(0.8);
+}
+
+input[type="date"],input[type="time"]::-webkit-calendar-picker-indicator:hover {
+  opacity: 1
 }

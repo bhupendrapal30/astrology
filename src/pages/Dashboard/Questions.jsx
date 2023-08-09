@@ -5,6 +5,7 @@ import Axios from 'axios';
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
 import { Formik, Form, Field, ErrorMessage } from "formik";
+import { Link } from 'react-router-dom';
 import { VerticalForm, FormInput } from "../../components/Ui";
 import AuthRequest from "../../APIRequest/AuthRequest";
 import { useSelector } from "react-redux";
@@ -28,10 +29,15 @@ const Questions = () => {
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
    
+   if(JSON.parse(localStorage.getItem('anspage'))=="1"){
+       navigate("/answers");
+   }
+   
   
   useEffect(() => {
     QuestionRequest.QuestionListData();
     document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+
   }, []);
   const { QuestionListData, TotalQuestion } = useSelector(
     (state) => state.Question,
@@ -43,7 +49,7 @@ const Questions = () => {
      let postBody1 = JSON.parse(localStorage.getItem('productData'));
      let amount = (postBody1.products.length)*100;
      
-     const API_URL ='http://13.232.4.61:5000/api/user/';
+     const API_URL =process.env.REACT_APP_API_URL+'user/';
      e.preventDefault();
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
@@ -53,7 +59,6 @@ const Questions = () => {
      }
      const orderUrl = `${API_URL}order`;
      const response = await Axios.post(orderUrl,{user_id:user_id,amount:amount});
-     console.log(response);
      const { data } = response;
      const options = {
      key: key,
@@ -66,7 +71,10 @@ const Questions = () => {
      const paymentId = response.razorpay_payment_id;
      const url = `${API_URL}capture`;
      const captureResponse = await Axios.post(url, {'paymentId':paymentId,user_id:user_id,amount:amount,order_id:data.id})
-     navigate("/answers");
+     
+     if(captureResponse.data.data.id)
+      localStorage.setItem('anspaidpdf', JSON.stringify("1"));
+       navigate("/answers");
       
     } catch (err) {
       console.log(err);
@@ -80,11 +88,18 @@ const rzp1 = new window.Razorpay(options);
 rzp1.open();
 };
   
- 
+  var totalCat = JSON.parse(localStorage.getItem('productData'));
+  var totalamount = (totalCat.products.length)*100;
   
 
   return (
   <div className="w3l-signinform">   <div className="container">
+    <div className="col-sm-12 ">
+      <div  className=" pull-right ">
+        
+          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
+        </div>
+     </div>
    
     <div className="row">
       <div className="col-sm-6 border-right border-white">
@@ -102,7 +117,7 @@ rzp1.open();
             {
             record!=null ?
              <div className="removedivcls" key={index}>
-               <h4  className="catClass" >{record.catName}</h4>
+               <h4  className="catClass" ><b>{record.catName}</b></h4>
                {record.ques?.map((ques, index) => {
                         return (
                <div className="removeComma" dangerouslySetInnerHTML={{ __html: ques.ques }}></div>
@@ -129,7 +144,7 @@ rzp1.open();
         </div>
         <div>
         
-          <button className="btn btn-primary" onClick={paymentHandler}>Pay</button>
+          <button className="btn btn-primary" onClick={paymentHandler}>Pay (Rs {totalamount})</button>
         </div>
       </div>
 </div>

@@ -53,15 +53,19 @@ class QuestionRequest {
       var catId=id;
      
      }
-      var postBody1 = {"catId":catId}
-      const { data} = await RestClient.postRequest2("user/questions",postBody1);
+    let userData =JSON.parse(localStorage.getItem("UserDetails"));
+    let user_id =0;
+    let userDetail=userData;
+    if(userDetail){
+      user_id =userDetail.user_id;
+     }
+     var postBody1 = {"catId":catId,user_id:user_id}
+     const { data} = await RestClient.postRequest2("user/questions",postBody1);
         console.log(data);
-       if (data) { 
+     if (data) { 
          
          if(data.data){
-
-           store.dispatch(SetQuestionLists(data.data));
-           
+            store.dispatch(SetQuestionLists(data.data));
          }
        }
   }
@@ -75,7 +79,7 @@ class QuestionRequest {
     if(userDetail){
       user_id =userDetail.user_id;
      }
-    let token = localStorage.getItem("AccessToken");
+    let token = localStorage.getItem("getToken");
     let postBody ={"user_id":user_id,"token":token,"catId":catId}
     
     const { data} = await RestClient.postRequest2('user/pdfinsert',postBody);
@@ -94,7 +98,7 @@ class QuestionRequest {
      if(userDetail){
       user_id =userDetail.user_id;
      }
-    let token = localStorage.getItem("AccessToken");
+    let token = localStorage.getItem("getToken");
     let postBody ={"user_id":user_id,"token":token,"catId":catId}
    // console.log(userData[0].user_id);
     const { data} = await RestClient.postRequest2('user/questionsinsert',postBody);
@@ -110,12 +114,17 @@ class QuestionRequest {
   static async QuestionListData() {
 
    
-    
+    let userData =JSON.parse(localStorage.getItem("UserDetails"));
+    let user_id =0;
+    let userDetail=userData;
+    if(userDetail){
+      user_id =userDetail.user_id;
+     }
      
      let postBody1 = JSON.parse(localStorage.getItem('quesData'));
      let catData =JSON.parse(localStorage.getItem('productData'));
      console.log(catData.products);
-     let postBody = {ques:postBody1 ,catIds:catData.products}
+     let postBody = {ques:postBody1 ,catIds:catData.products,user_id:user_id}
 
 
     //let postBody={'test':"Hello"}
@@ -162,10 +171,17 @@ class QuestionRequest {
   }
 
   static async AnswerListData() {
+     let userData = JSON.parse(localStorage.getItem("UserDetails"));
+     let user_id =0;
+     let userDetail=userData;
+     if(userDetail){
+      user_id =userDetail.user_id;
+     }
+
      let postBody1 = JSON.parse(localStorage.getItem('quesData'));
      let catData =JSON.parse(localStorage.getItem('productData'));
      console.log(catData.products);
-     let postBody = {ques:postBody1 ,catIds:catData.products}
+     let postBody = {ques:postBody1 ,catIds:catData.products,user_id:user_id}
 
     //let postBody={'test':"Hello"}
 

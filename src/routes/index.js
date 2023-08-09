@@ -105,6 +105,13 @@ const AllRoutes = () => {
             path="/pdflink"
             element={<LoadComponent component={Pdflink} />}
           />
+
+           <Route
+            path="/account/logout"
+            element={<LoadComponent component={Logout} />}
+          />
+
+           
           
           <Route path="*" element={<Navigate to="/products" />} />
         </Route>

@@ -2,12 +2,16 @@
 import React, { useEffect, useState ,createContext,useRef } from "react";
 
 import * as yup from "yup";
+import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { VerticalForm, FormInput } from "../../components/Ui";
 import AuthRequest from "../../APIRequest/AuthRequest";
 import { useSelector } from "react-redux";
 import QuestionRequest from "./../../APIRequest/QuestionRequest";
+import { useNavigate } from "react-router-dom";
+
+
 
 
 // components
@@ -20,12 +24,21 @@ import Modal from 'react-bootstrap/Modal';
 
 
 const Pdflink = () => {
+  const navigate = useNavigate();
 
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
+  
    
   
+  
   useEffect(() => {
+    if(JSON.parse(localStorage.getItem('anspaidpdf'))=="1"){
+       localStorage.setItem('anspage', JSON.stringify("1"));
+       
+    }else {
+     navigate("/pdf-products");
+    }
     QuestionRequest.PdfDownloadLink();
     document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
   }, []);
@@ -37,7 +50,7 @@ const Pdflink = () => {
   }
 
 
-  console.log(PdfListData[0]);
+  console.log(pdflink)
   
   
  
@@ -47,6 +60,12 @@ const Pdflink = () => {
   <div className="w3l-signinform">   <div className="container">
    
     <div className="row">
+      <div className="col-sm-12 ">
+      <div  className=" pull-right ">
+        
+          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
+        </div>
+     </div>
       <div className="col-sm-6 border-right border-white">
     
     <div
@@ -66,18 +85,16 @@ const Pdflink = () => {
  <div className="col-sm-6 text-center">
         <h2 className="text-center text-white mb-2">Download </h2>
         <div>
-          <img src="images/qr.png" />
+          
         </div>
-        <div>
-          <a href="#">Choose another option</a>
-        </div>
+        
         <div>
         {PdfListData?.map((record, index) => {
                         return (
              <>
             {
             index==0 ?
-          <a href={record.pdfpath}><button className="btn btn-primary">Download Pdf</button></a>
+          <a href={record.pdfpath}><button className="btn btn-primary"><i className="fa fa-download"></i>&nbsp;Download Pdf</button></a>
           :''
             }
             </>

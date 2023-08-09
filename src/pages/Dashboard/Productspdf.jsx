@@ -17,9 +17,14 @@ const Productspdf = (): React$Element<any> => {
 
 
   const navigate = useNavigate();
-  const key ='rzp_test_PX2vJ9ubej1UGc';
-
+  const key =process.env.REACT_APP_ROZAR_KEY;
+  
+  
       useEffect(() => {
+
+        if(JSON.parse(localStorage.getItem('anspage'))=="1"){
+          navigate("/pdflink");
+        }
        
        //document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
        
@@ -64,13 +69,18 @@ const Productspdf = (): React$Element<any> => {
 
 
       const paymentHandler = async (e) => {
-     let postBody1 = JSON.parse(localStorage.getItem('productCat'));
-     let amt = new Array();
-     amt.push(amt);
-      console.log(parseInt(postBody1));
-     let amount = (amt.length)*100;
-     alert(amount);
-     const API_URL ='http://13.232.4.61:5000/api/user/';
+         let postBody1 = JSON.parse(localStorage.getItem('productCat'));
+         let amt = new Array();
+         amt.push(amt);
+    
+         let amount = (amt.length)*100;
+         const whatsupToken = await Axios.post('https://apis.rmlconnect.net/auth/v1/login/',{username:'astroscience',password:'Astro@1234'});
+         var whtoken ='';
+         if(whatsupToken.data.JWTAUTH){
+            whtoken =whatsupToken.data.JWTAUTH;
+         }
+         
+     const API_URL =process.env.REACT_APP_API_URL+'user/';
      e.preventDefault();
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
@@ -92,10 +102,12 @@ const Productspdf = (): React$Element<any> => {
     try {
      const paymentId = response.razorpay_payment_id;
      const url = `${API_URL}capture`;
-     const captureResponse = await Axios.post(url, {'paymentId':paymentId,user_id:user_id,amount:amount,order_id:data.id})
-     navigate("/pdflink");
+     const captureResponse = await Axios.post(url, {'paymentId':paymentId,user_id:user_id,amount:amount,order_id:data.id,whtoken:whtoken,catId:postBody1})
+    if(captureResponse.data.data.id)
+       localStorage.setItem('anspaidpdf', JSON.stringify("1"));
+       navigate("/pdflink");
       
-    } catch (err) {
+    }catch (err) {
       console.log(err);
     }
   },
@@ -108,7 +120,7 @@ rzp1.open();
 };
   
 
-    
+   const TotalAmount =100; 
      
 
     return (
@@ -116,6 +128,12 @@ rzp1.open();
     <div className="w3l-signinform">
         <div className="allWrapper">
           <header className="header" id="header">
+             <div className="col-sm-12 ">
+      <div  className=" pull-right ">
+        
+          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
+        </div>
+     </div>
           </header>{/* end of header */}
           <section className="quiz_section" id="quizeSection">
             <div className="container">
@@ -133,14 +151,14 @@ rzp1.open();
                     <div className="row">
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="40" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="radio"  value="40" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-child" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Child</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Child (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -150,14 +168,14 @@ rzp1.open();
                       
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox" value="25" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="radio" value="25" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-heartbeat" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Health</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Health (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -165,29 +183,29 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="82" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="radio"  value="83" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-car" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Vehicle</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Vehicle (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
+                        </div>{/* end of quiz_card_area */} 
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="35" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="radio"  value="35" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-inr" aria-hidden="true" /><i className="fa fa-caret-down text-danger" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Bad Wealth</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Bad Wealth (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -196,14 +214,14 @@ rzp1.open();
                       
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="38" />
+                          <Field className="quiz_checkbox" name="products" type="radio" onClick={handleChange}  value="38" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-users" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Married life</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Married life (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -211,14 +229,14 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="82" />
+                          <Field className="quiz_checkbox" name="products" type="radio" onClick={handleChange}  value="82" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-home" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> House</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> House (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -226,14 +244,14 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="36" />
+                          <Field className="quiz_checkbox" name="products" type="radio" onClick={handleChange}  value="36" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-inr" aria-hidden="true" /><i className="fa fa-caret-up text-success" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Good wealth</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Good wealth (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -241,14 +259,14 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="82" />
+                          <Field className="quiz_checkbox" name="products" type="radio" onClick={handleChange}  value="81" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-suitcase" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Occupation</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Occupation (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -256,14 +274,14 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox"  onClick={handleChange} value="44" />
+                          <Field className="quiz_checkbox" name="products" type="radio"  onClick={handleChange} value="44" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
                                 <i className="fa fa-plane" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Foreign Trip</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Foreign Trip (Rs {TotalAmount})</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}

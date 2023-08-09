@@ -21,18 +21,19 @@ import Modal from 'react-bootstrap/Modal';
 
 const Popup = (props) => {
 
-   const ref = useRef([]);
-   const [checked, setChecked] = useState([]);
+   //const ref = useRef([]);
    const myRefnamenew= useRef(null);
-   const [isChecked, setIsChecked] = useState(false)
+    const ref = useRef([]);
+   const [checked, setChecked] = useState([]);
+   
 
 
    
-  console.log(props);
+
   useEffect(() => {
     // EmployeeRequest.EmployeeList(1, 5, 0);
        QuestionRequest.QuestionLogin();
-       // QuestionRequest.QuestionList(props.valCatId);
+      //QuestionRequest.QuestionList(props.valCatId);
     // EmployeeRequest.StaffList();
   }, []);
   
@@ -51,27 +52,20 @@ const Popup = (props) => {
 
   }
 
-  const checkHandler = (event) => {
-
-    var isChecked = event.target.checked;  
-        var item = event.target.value;  
-           
-   
-   
-   }
+  
 
 const handleCheck = (event) => {
-  var updatedList = [...checked];
-  if (event.target.checked) {
-    updatedList = [...checked, event.target.value];
-  } else {
-    updatedList.splice(checked.indexOf(event.target.value), 1);
-  }
-  let objArry =[];
+  // var updatedList = [...checked];
+  // if (event.target.checked) {
+  //   updatedList = [...checked, event.target.value];
+  // } else {
+  //   updatedList.splice(checked.indexOf(event.target.value), 1);
+  // }
+  // let objArry =[];
 
-   objArry[props.valCatId]=updatedList;
-   console.log(objArry);
-  setChecked(updatedList);
+  //  objArry[props.valCatId]=updatedList;
+  //  console.log(objArry);
+  // setChecked(updatedList);
 };
 
     const initialValues = {
@@ -82,61 +76,33 @@ const handleCheck = (event) => {
          questions: yup.array().required('At least select one question')
     })
       const onSubmit = (questions) => {
-          
-        localStorage.setItem('quesData', JSON.stringify(questions));
-        myRefnamenew.current.click();
+            let questData = questions.questions;
+            let newQueArre =new Array();
+            questData.forEach(function (value) {
+                 let splival = value.split("-");
+                 newQueArre.push(splival[0]);
+            });
+            localStorage.setItem('quesData', JSON.stringify(newQueArre));
+            myRefnamenew.current.click();
       }
 
     
 
-   const [checkboxVal, setcheckboxVal] = useState({
-    questions: [],
-   
-   });
   
-  const handleChangeCheckbox = (e) => {
-    // Destructuring
-    const { value, checked } = e.target;
-    const { questions } = checkboxVal;
-     console.log(e.target);
-    console.log(`${value} is ${checked}`);
-     
-    // Case 1 : The user checks the box
-    if (checked) {
-      setcheckboxVal({
-        questions: [...questions, value],
-        
-      });
-    }
   
-    // Case 2  : The user unchecks the box
-    else {
-      setcheckboxVal({
-        questions: questions.filter((e) => e !== value),
-        
-      });
-    }
-  };
-
-
-
-
-       const Unchecked = () => {
-
-        var lt = (ref.current.length)-1;
+  const Unchecked = () => {
+     var lt = (ref.current.length)-1;
         for (let i = 0; i < lt; i++) {
          ref.current[i].checked = false;
         }
 
     }
-    const Checked = () => {
-      alert('hii');
-      for (let i = 0; i < ref.current.length; i++) {
-          ref.current[i].checked = true;
-        }
 
-    }
+    console.log(QuestionLists);
+
     var checkData = QuestionLists.length>0?true:false;
+
+   
 
 
 
@@ -151,25 +117,36 @@ const handleCheck = (event) => {
               <button type="button" className="close" data-dismiss="modal">×</button>
             </div>
             <div className="modal-body">
+
+
              <Formik initialValues={initialValues}
                validationSchema={validationSchema}
                onSubmit={onSubmit}>
-              
+             
          
            <Form>
-
+              
               {QuestionLists?.map((record, index) => {
                         return (
-                
-              <div className="form-check" key={index}>
-               <Field className="form-check-input" name="questions"  checked={false}  id="flexCheckDefault" type="checkbox" 
-value={record.qid} />
+               
+                <>
+            {
+            record!=null ?
+
+          <React.Fragment key={index}>     
+          <div className="form-check" >
+              
+           <Field className="form-check-input checkboxcls" name="questions" data-value={record.qid}  value={record.qid +'-'+record.ques}  type="checkbox" 
+ />
                 <label className="form-check-label" htmlFor="flexCheckDefault">
                  <div style={{"fontWeight":"700"}} dataindex={index+1} dangerouslySetInnerHTML={{ __html: record.ques }} />
                  
                 </label>
               </div>
-              
+              </React.Fragment>
+              :''
+            }
+            </>
               );
               })}
               

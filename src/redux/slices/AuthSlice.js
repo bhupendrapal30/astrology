@@ -10,7 +10,8 @@ const AuthSlice = createSlice({
   reducers: {
     SetLogin: (state, action) => {
       console.log(action.payload);
-      SessionHelper.SetToken(action.payload);
+      let token = "73b43e8a7979d4199621da9b9bf851834145399a";
+      SessionHelper.SetToken(JSON.stringify(token));
       state.AccessToken = SessionHelper.GetToken() || undefined;
     },
     SetLogout: (state, action) => {

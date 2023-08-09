@@ -98,8 +98,14 @@ const Login = () => {
 
  
  
+  const date = new Date();
+  const formattedDate = date.toLocaleDateString('en-GB', {
+                year: 'numeric',
+                month: '2-digit',
+                day: '2-digit',
+            }).split('/').reverse().join('-');
 
- 
+  
 
   
   
@@ -135,35 +141,35 @@ const Login = () => {
                     type="text"
                     name="name"
                     placeholder={t("Name")}
-                    containerClass={"mb-3"}
+                    containerclass={"mb-3"}
                     >
                   </Field>
                   <div className="errorformCls"><ErrorMessage name="name" /></div>
                 </div>
                 <div className="input-group rounded-0">
-                  <span><i className="fa fa-user" aria-hidden="true" /></span>
+                  <span><i className=" fa fa-calendar" aria-hidden="true" /></span>
                   <Field
                           type="date"
                           name="dob"
-                         
+                          max={formattedDate}
                           placeholder={t("Enter Date Of Birth")}
-                          containerClass={"mb-3"}>
+                          containerclass={"mb-3"}>
                     </Field>
-                    <div className="errorformCls"><ErrorMessage name="dob" /></div>
+                    <div className="errorformCls"><ErrorMessage name="dob"  /></div>
                 </div>
                 <div className="input-group rounded-0">
-                  <span><i className="fa fa-user" aria-hidden="true" /></span>
+                  <span><i className="fa fa-clock-o" aria-hidden="true" /></span>
                   <Field
-                    type="text"
+                    type="time"
                     name="tob"
                     placeholder={t("tob")}
-                    containerClass={"mb-3"}
+                    containerclass={"mb-3"}
                     >
                   </Field>
                    <div className="errorformCls"><ErrorMessage name="tob" /></div>
                 </div>
                 <div className="input-group rounded-0">
-                  <span><i className="fa fa-user" aria-hidden="true" /></span>
+                  <span><i className="fa fa-map-marker" aria-hidden="true" /></span>
                   <Field
                     type="text"
                     name="place"
@@ -171,7 +177,7 @@ const Login = () => {
                     onBlur={onPlaceChange}
                     
                     placeholder={t("Place")}
-                    containerClass={"mb-3"}
+                    containerclass={"mb-3"}
                     >
                   </Field>
                   
@@ -180,13 +186,13 @@ const Login = () => {
                
             </div>
              <div className="input-group rounded-0">
-                  <span><i className="fa fa-user" aria-hidden="true" /></span>
+                  <span><i className="fa fa-map-marker" aria-hidden="true" /></span>
                    
                    <Field as="select"
                     type="text"
                     name="placeNew"
                     placeholder={t("Place")}
-                    containerClass={"mb-3 select option"}
+                    containerclass={"mb-3 select option"}
                     className="select option"
 
                     
@@ -210,13 +216,19 @@ const Login = () => {
 
               
                 <div className="input-group two-groop">
-                  <span><i className="fa fa-key" aria-hidden="true" /></span>
+                  <span><i className="fa fa-whatsapp" aria-hidden="true" /></span>
 
                   <Field
                     type="text"
                     name="mobileNo"
+                    maxLength={10}
+                    onKeyPress={(event) => {
+        if (!/[0-9]/.test(event.key)) {
+          event.preventDefault();
+        }
+      }}
                     placeholder={t("WhatsApp Number")}
-                    containerClass={"mb-3"}
+                    containerclass={"mb-3"}
                     className='input-group rounded-0'
                     >
                   </Field>
@@ -225,7 +237,7 @@ const Login = () => {
                   
                 </div>
               <div className="input-group two-groop">
-                  <span><i className="fa fa-key" aria-hidden="true" /></span>
+                  <span><i className="fa fa-comments" aria-hidden="true" /></span>
               <Field as="select" name="atype">
                  <option value="question">Question-Answers</option>
                  <option value="pdf">PDF</option>

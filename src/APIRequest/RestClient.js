@@ -62,17 +62,7 @@ const ErrorReturn = (error) => {
 
 class RestClient {
 
-  static async getRequest2(id) {
-    store.dispatch(SetLoading());
-    return await axios
-      .get('http://localhost/astroapp/index.php/api/questions/index_get/'+id, axiosHeaders2())
-      .then((response) => {
-        return ResponseReturn(response);
-      })
-      .catch((error) => {
-        return ErrorReturn(error);
-      });
-  }
+  
 
   static async getRequest(url) {
     store.dispatch(SetLoading());
@@ -129,7 +119,7 @@ class RestClient {
   }
 
   static async postRequest2(url, postBody) {
-    var url1= 'http://13.232.4.61:5000/api/'+url;
+    var url1= 'http://localhost:5000/api/'+url;
 
     store.dispatch(SetLoading());
     return await axios

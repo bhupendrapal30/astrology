@@ -1,6 +1,7 @@
 // @flow
 import React, { useEffect, useState,useRef,createContext} from "react";
 import { Card, Table } from 'react-bootstrap';
+import Axios from 'axios';
 
 import { Link } from 'react-router-dom';
 import * as yup from "yup";
@@ -15,17 +16,26 @@ import { useNavigate } from "react-router-dom";
 const Products = (): React$Element<any> => {
 
 
-  const navigate = useNavigate();
+    const navigate = useNavigate();
      let userData =JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
      let userDetail=userData;
+
+     
+     let tokenVal =localStorage.getItem("AccessToken");
+     
      
       useEffect(() => {
+        
+        if( userDetail && userDetail.atype=='pdf'){
+           navigate("/pdf-products");
+        }
+        if(!tokenVal){
+         window.location.reload();
+        }
        
-       document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
-        if(userDetail.atype=='pdf'){
-        navigate("/pdf-products");
-     }
+       
+        
        
     }, []);
 
@@ -53,17 +63,52 @@ const Products = (): React$Element<any> => {
        
       };
 
-      const handleChange = (event) => {
-        if(event.target.checked){
-          let catId =event.target.value;
+      const hideLoder = () => {
+         document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+      }
+
+      const showLoder = () => {
+         document.getElementsByClassName("d-none")[0].style.visibility = 'visible';
+      }
+
+
+    const handleChange  = async (e) => {
+    
+    if(e.target.checked){
+       setShow(true);
+       showLoder();
+       let catId =e.target.value;
+       //QuestionRequest.QuestionList(catId);
+      const API_URL ='http://localhost:5000/api/user/';
+      e.preventDefault();
+       
+       let userData =JSON.parse(localStorage.getItem("UserDetails"));
+       let user_id =0;
+       let userDetail=userData;
+       if(userDetail){
+        user_id =userDetail.user_id;
+       }
+      let token = localStorage.getItem("getToken");
+      let postBody ={"user_id":user_id,"token":token,"catId":catId}
+      const saveUrl = `${API_URL}questionsinsert`;
+      const response = await Axios.post(saveUrl,postBody);
+      
+      
+      if(response.data.status){
+         
           QuestionRequest.QuestionList(catId);
-          QuestionRequest.postQuestionData(catId);
           setCatId(catId);
+          //hideLoder();
           myRefname.current.click();
 
-
-        }
+      }else{
+        QuestionRequest.QuestionList(catId);
+        myRefname.current.click();
+        
       }
+      hideLoder();
+    }
+  }
 
     
      
@@ -287,7 +332,10 @@ const Products = (): React$Element<any> => {
         </div>
         
      </div>
+    {
+    show  ? 
      <Popup valCatId={valCatId} setCatId={setCatId} />
+     :''}
       
      </>
 

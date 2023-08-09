@@ -3,6 +3,7 @@ import React, { useEffect, useState ,createContext,useRef } from "react";
 
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
+import { Link } from 'react-router-dom';
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import { VerticalForm, FormInput } from "../../components/Ui";
 import AuthRequest from "../../APIRequest/AuthRequest";
@@ -15,17 +16,25 @@ import Timeline from "../../components/Ui/Timeline";
 import TimelineItem from "../../components/Ui/TimelineItem";
 import CardTitle from "../../components/Ui/CardTitle";
 import Modal from 'react-bootstrap/Modal';
+import { useNavigate } from "react-router-dom"; 
 
 
 
 
 const Answer = () => {
+    const navigate = useNavigate();
 
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
-   
+   //localStorage.setItem('anspage', JSON.stringify("1"));
   
   useEffect(() => {
+    if(JSON.parse(localStorage.getItem('anspaidpdf'))=="1"){
+       localStorage.setItem('anspage', JSON.stringify("1"));
+       
+    }else {
+     navigate("/pdf-products");
+    }
     QuestionRequest.AnswerListData();
     document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
   }, []);
@@ -44,6 +53,12 @@ const Answer = () => {
    
     <div className="row">
       <div className="col-sm-12 ">
+      <div className="col-sm-12 ">
+      <div  className=" pull-right ">
+        
+          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
+        </div>
+     </div>
     
     <div
       data-bs-spy="scroll"
