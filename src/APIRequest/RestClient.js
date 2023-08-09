@@ -119,7 +119,7 @@ class RestClient {
   }
 
   static async postRequest2(url, postBody) {
-    var url1= 'http://localhost:5000/api/'+url;
+    var url1= process.env.REACT_APP_API_URL+url;
 
     store.dispatch(SetLoading());
     return await axios
