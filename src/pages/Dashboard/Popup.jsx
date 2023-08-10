@@ -8,6 +8,7 @@ import { VerticalForm, FormInput } from "../../components/Ui";
 import AuthRequest from "../../APIRequest/AuthRequest";
 import { useSelector } from "react-redux";
 import QuestionRequest from "./../../APIRequest/QuestionRequest";
+import ToastMessage from "../../helpers/ToastMessage";
 
 
 // components
@@ -27,7 +28,7 @@ const Popup = (props) => {
    const [checked, setChecked] = useState([]);
    
 
-
+  console.log(props);
    
 
   useEffect(() => {
@@ -76,14 +77,21 @@ const handleCheck = (event) => {
          questions: yup.array().required('At least select one question')
     })
       const onSubmit = (questions) => {
+
             let questData = questions.questions;
-            let newQueArre =new Array();
-            questData.forEach(function (value) {
-                 let splival = value.split("-");
-                 newQueArre.push(splival[0]);
-            });
-            localStorage.setItem('quesData', JSON.stringify(newQueArre));
-            myRefnamenew.current.click();
+            if(questData.length > 0 ){
+              let newQueArre =new Array();
+              questData.forEach(function (value) {
+                   let splival = value.split("-");
+                   newQueArre.push(splival[0]);
+              });
+              localStorage.setItem('quesData', JSON.stringify(newQueArre));
+              props.showButton(true);
+              ToastMessage.successMessage("Added your questions successfully !!!");
+              myRefnamenew.current.click();
+            }else{
+               ToastMessage.errorMessage("Please add your questions !!!");
+            }
       }
 
     

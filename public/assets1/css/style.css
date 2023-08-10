@@ -959,3 +959,24 @@ input[type="date"],input[type="time"]::-webkit-calendar-picker-indicator {
 input[type="date"],input[type="time"]::-webkit-calendar-picker-indicator:hover {
   opacity: 1
 }
+
+
+
+.css-lzr3bi-LoadingOverlayWrapperBase {
+    position: absolute;
+    height: 100%;
+    width: 100%;
+    top: 300px !important;
+    left: 0px;
+    display: -webkit-box;
+    display: -webkit-flex;
+    display: -ms-flexbox;
+    display: flex;
+    text-align: center;
+    font-size: 1.2em;
+    color: #FFF;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 800;
+    -webkit-transition: opacity 500ms ease-in;
+    transition: opacity 500ms ease-in;
+    opacity: 1;

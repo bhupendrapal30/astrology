@@ -2,6 +2,7 @@
 import React, { useEffect, useState,useRef,createContext} from "react";
 import { Card, Table } from 'react-bootstrap';
 import Axios from 'axios';
+import ToastMessage from "../../helpers/ToastMessage";
 
 import { Link } from 'react-router-dom';
 import * as yup from "yup";
@@ -12,13 +13,18 @@ import RestClient from "../../APIRequest/RestClient";
 import QuestionRequest from "../../APIRequest/QuestionRequest";
 import Popup from "../Dashboard/Popup";
 import { useNavigate } from "react-router-dom";
+import LoadingOverlay from 'react-loading-overlay-ts';
 
 const Productspdf = (): React$Element<any> => {
+
+  
+   const [isActive, setActive] = useState(false);
+   const [button, setbutton] = useState(4);
 
 
   const navigate = useNavigate();
   const key =process.env.REACT_APP_ROZAR_KEY;
-  
+
   
       useEffect(() => {
 
@@ -53,22 +59,51 @@ const Productspdf = (): React$Element<any> => {
        
       };
 
-      const handleChange = (event) => {
+      const handleChange = async (event) => {
 
         if(event.target.checked){
-    
-          let catId =event.target.value;
-          localStorage.setItem('productCat', JSON.stringify(catId));
-          localStorage.setItem('productData', JSON.stringify(catId));
+           
+            setActive(true);
+            setbutton(4);
+            let catId =event.target.value;
+            localStorage.setItem('productCat', JSON.stringify(catId));
+            localStorage.setItem('productData', JSON.stringify(catId));
           //alert(catId);
           // QuestionRequest.QuestionList(catId);
-            QuestionRequest.postPdfCreation(catId);
+            //QuestionRequest.postPdfCreation(catId);
+            
+            const API_URL =process.env.REACT_APP_API_URL+'user/';
+           
+       
+           let userData =JSON.parse(localStorage.getItem("UserDetails"));
+           let user_id =0;
+           let userDetail=userData;
+           if(userDetail){
+            user_id =userDetail.user_id;
+           }
+            let token = localStorage.getItem("getToken");
+            let postBody ={"user_id":user_id,"token":token,"catId":catId}
+            const saveUrl = `${API_URL}pdfinsert`;
+            const response = await Axios.post(saveUrl,postBody);
+            if(response.data.status){
+                setActive(false);
+                setbutton(2);
+               
+            }else{
+                setActive(false);
+                setbutton(2);
+             
+            }
+            
             setCatId(catId);
          }
+         
       }
+      
 
+const paymentHandler = async (e) => {
 
-      const paymentHandler = async (e) => {
+         ToastMessage.successMessage("Please wait....");
          let postBody1 = JSON.parse(localStorage.getItem('productCat'));
          let amt = new Array();
          amt.push(amt);
@@ -90,7 +125,6 @@ const Productspdf = (): React$Element<any> => {
      }
      const orderUrl = `${API_URL}order`;
      const response = await Axios.post(orderUrl,{user_id:user_id,amount:amount});
-     console.log(response);
      const { data } = response;
      const options = {
      key: key,
@@ -117,6 +151,7 @@ const Productspdf = (): React$Element<any> => {
 };
 const rzp1 = new window.Razorpay(options);
 rzp1.open();
+
 };
   
 
@@ -125,11 +160,13 @@ rzp1.open();
 
     return (
      <>
+
+       <LoadingOverlay active={isActive} spinner text='Loading your content...'></LoadingOverlay> 
     <div className="w3l-signinform">
         <div className="allWrapper">
           <header className="header" id="header">
-             <div className="col-sm-12 ">
-      <div  className=" pull-right ">
+        <div className="col-sm-12 ">
+          <div  className=" pull-right ">
         
           <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
         </div>
@@ -289,7 +326,8 @@ rzp1.open();
                       </div>{/* end of col3  */}
                       <div className="col-sm-12">
                         <div className="quiz_next">
-                          <button className="quiz_continueBtn" type="button" onClick={paymentHandler}   >Continue</button>
+                        
+                          <button className="quiz_continueBtn" onClick={paymentHandler} type="button"  style={{display:button=="2" ? 'block' : 'none' }}>Continue  </button> 
                         </div>{/* end of quiz_next */}
                       </div>{/* end of col12 */}
                     </div>{/* end of quiz_card_area */}

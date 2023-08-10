@@ -2,7 +2,7 @@
 import React, { useEffect, useState,useRef,createContext} from "react";
 import { Card, Table } from 'react-bootstrap';
 import Axios from 'axios';
-
+import ToastMessage from "../../helpers/ToastMessage";
 import { Link } from 'react-router-dom';
 import * as yup from "yup";
 import { useTranslation } from "react-i18next";
@@ -12,6 +12,9 @@ import RestClient from "../../APIRequest/RestClient";
 import QuestionRequest from "../../APIRequest/QuestionRequest";
 import Popup from "../Dashboard/Popup";
 import { useNavigate } from "react-router-dom";
+import LoadingOverlay from 'react-loading-overlay-ts'; 
+
+
 
 const Products = (): React$Element<any> => {
 
@@ -20,6 +23,8 @@ const Products = (): React$Element<any> => {
      let userData =JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
      let userDetail=userData;
+     const [showdiv, setshowdiv] = useState(false);
+    const [isActive, setActive] = useState(false);
 
      
      let tokenVal =localStorage.getItem("AccessToken");
@@ -63,23 +68,25 @@ const Products = (): React$Element<any> => {
        
       };
 
-      const hideLoder = () => {
-         document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
-      }
-
-      const showLoder = () => {
-         document.getElementsByClassName("d-none")[0].style.visibility = 'visible';
-      }
-
+      
+    const showButton =val => {
+        
+        setshowdiv(val);
+    };
 
     const handleChange  = async (e) => {
+
+
     
     if(e.target.checked){
+      showButton(false);
+      setActive(true);
+      ToastMessage.successMessage("Please wait....");
        setShow(true);
-       showLoder();
+       
        let catId =e.target.value;
        //QuestionRequest.QuestionList(catId);
-      const API_URL ='http://localhost:5000/api/user/';
+      const API_URL =process.env.REACT_APP_API_URL+'user/';
       e.preventDefault();
        
        let userData =JSON.parse(localStorage.getItem("UserDetails"));
@@ -106,18 +113,26 @@ const Products = (): React$Element<any> => {
         myRefname.current.click();
         
       }
-      hideLoder();
+      setActive(false);
+      
     }
   }
 
     
-     
+ 
 
     return (
+     
      <>
+       <LoadingOverlay active={isActive} spinner text='Loading your content...'></LoadingOverlay> 
     <div className="w3l-signinform">
         <div className="allWrapper">
           <header className="header" id="header">
+             <div className="col-sm-12 ">
+          <div  className=" pull-right ">
+        
+          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
+        </div></div>
           </header>{/* end of header */}
           <section className="quiz_section" id="quizeSection">
             <div className="container">
@@ -317,7 +332,8 @@ const Products = (): React$Element<any> => {
                       <div className="col-sm-12">
                         <div className="quiz_next">
                            <div  ref={myRefname} style={{display:"none"}}   data-toggle="modal"  data-target="#myModal">Continue</div>
-                          <button className="quiz_continueBtn" type="submit"   >Continue</button>
+                          {showdiv ?
+                          <button className="quiz_continueBtn" type="submit"   >Continue</button>:'' }
                         </div>{/* end of quiz_next */}
                       </div>{/* end of col12 */}
                     </div>{/* end of quiz_card_area */}
@@ -334,12 +350,14 @@ const Products = (): React$Element<any> => {
      </div>
     {
     show  ? 
-     <Popup valCatId={valCatId} setCatId={setCatId} />
+     <Popup valCatId={valCatId} setCatId={setCatId} showButton={showButton} />
      :''}
+      
+  
       
      </>
 
-
+    
 
     );
 };

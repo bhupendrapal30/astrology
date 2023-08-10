@@ -72,7 +72,7 @@ class QuestionRequest {
 
   static async postPdfCreation(catId) {
     
-    document.getElementsByClassName("d-none")[0].style.visibility = 'visible';
+    
     let userData =JSON.parse(localStorage.getItem("UserDetails"));
     let user_id =0;
     let userDetail=userData;
@@ -84,7 +84,7 @@ class QuestionRequest {
     
     const { data} = await RestClient.postRequest2('user/pdfinsert',postBody);
     if(data){
-      document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+      
     }
     
   }

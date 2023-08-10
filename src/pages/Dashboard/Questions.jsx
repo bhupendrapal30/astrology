@@ -12,12 +12,14 @@ import { useSelector } from "react-redux";
 import QuestionRequest from "./../../APIRequest/QuestionRequest";
 
 
+
 // components
 import Timeline from "../../components/Ui/Timeline";
 import TimelineItem from "../../components/Ui/TimelineItem";
 import CardTitle from "../../components/Ui/CardTitle";
 import Modal from 'react-bootstrap/Modal';
-import { useNavigate } from "react-router-dom"; 
+import { useNavigate } from "react-router-dom";
+
 
 
 
@@ -29,6 +31,7 @@ const Questions = () => {
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
    
+   
    if(JSON.parse(localStorage.getItem('anspage'))=="1"){
        navigate("/answers");
    }
@@ -36,7 +39,7 @@ const Questions = () => {
   
   useEffect(() => {
     QuestionRequest.QuestionListData();
-    document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+   
 
   }, []);
   const { QuestionListData, TotalQuestion } = useSelector(
@@ -93,6 +96,8 @@ rzp1.open();
   
 
   return (
+    <>
+
   <div className="w3l-signinform">   <div className="container">
     <div className="col-sm-12 ">
       <div  className=" pull-right ">
@@ -151,7 +156,8 @@ rzp1.open();
 
 </div>
    
-  </div>   
+  </div> 
+  </>  
   );
 };
 

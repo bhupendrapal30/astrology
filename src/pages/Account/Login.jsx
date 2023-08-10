@@ -50,7 +50,7 @@ const Login = () => {
 
   function loadData() {
     
-      document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+      
    }
   
 
