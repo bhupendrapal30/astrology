@@ -36,7 +36,7 @@ const Answer = () => {
      navigate("/pdf-products");
     }
     QuestionRequest.AnswerListData();
-    document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+    
   }, []);
   const { AnswerListData, TotalQuestion } = useSelector(
     (state) => state.Question,

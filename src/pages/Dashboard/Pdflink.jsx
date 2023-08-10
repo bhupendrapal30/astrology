@@ -29,7 +29,7 @@ const Pdflink = () => {
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
   
-   
+
   
   
   useEffect(() => {
@@ -40,7 +40,7 @@ const Pdflink = () => {
      navigate("/pdf-products");
     }
     QuestionRequest.PdfDownloadLink();
-    document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+    
   }, []);
   const { PdfListData, TotalQuestion } = useSelector(
     (state) => state.Question,
@@ -49,12 +49,6 @@ const Pdflink = () => {
     var pdflink =PdfListData[0].pdfpath;
   }
 
-
-  console.log(pdflink)
-  
-  
- 
-  
 
   return (
   <div className="w3l-signinform">   <div className="container">
