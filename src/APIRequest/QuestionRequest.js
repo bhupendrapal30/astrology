@@ -91,7 +91,7 @@ class QuestionRequest {
 
 
   static async postQuestionData(catId) {
-    document.getElementsByClassName("d-none")[0].style.visibility = 'visible';
+   
      let userData =JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
      let userDetail=userData;
@@ -104,7 +104,7 @@ class QuestionRequest {
     const { data} = await RestClient.postRequest2('user/questionsinsert',postBody);
     console.log(data);
     if(data){
-      document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+      
     }
     
   }
@@ -144,7 +144,7 @@ class QuestionRequest {
 
 
   static async PdfDownloadLink() {
-    document.getElementsByClassName("d-none")[0].style.visibility = 'visible';
+   
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
      let user_id =0;
      let userDetail=userData;
@@ -163,7 +163,7 @@ class QuestionRequest {
        if (data) { 
          
          if(data.data){
-           document.getElementsByClassName("d-none")[0].style.visibility = 'hidden';
+           
            store.dispatch(setPdfListData(data.data));
          }
        }
