@@ -1,23 +1,12 @@
 // @flow
-import React, { useEffect, useState ,createContext,useRef } from "react";
+import React, { useEffect, useState ,useRef } from "react";
 import Axios from 'axios';
-
-import * as yup from "yup";
-import { useTranslation } from "react-i18next";
-import { Formik, Form, Field, ErrorMessage } from "formik";
 import { Link } from 'react-router-dom';
-import { VerticalForm, FormInput } from "../../components/Ui";
-import AuthRequest from "../../APIRequest/AuthRequest";
+
+
 import { useSelector } from "react-redux";
 import QuestionRequest from "./../../APIRequest/QuestionRequest";
 
-
-
-// components
-import Timeline from "../../components/Ui/Timeline";
-import TimelineItem from "../../components/Ui/TimelineItem";
-import CardTitle from "../../components/Ui/CardTitle";
-import Modal from 'react-bootstrap/Modal';
 import { useNavigate } from "react-router-dom";
 
 
@@ -26,7 +15,7 @@ import { useNavigate } from "react-router-dom";
 
 const Questions = () => {
    const navigate = useNavigate();
-   const key ='rzp_test_PX2vJ9ubej1UGc';
+   const key =process.env.REACT_APP_ROZAR_KEY;
 
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);

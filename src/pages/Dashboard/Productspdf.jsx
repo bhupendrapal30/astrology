@@ -109,7 +109,7 @@ const paymentHandler = async (e) => {
          amt.push(amt);
     
          let amount = (amt.length)*100;
-         const whatsupToken = await Axios.post('https://apis.rmlconnect.net/auth/v1/login/',{username:'astroscience',password:'Astro@1234'});
+         const whatsupToken = await Axios.post(process.env.REACT_APP_WHATSUP_API_URL,{username:process.env.REACT_APP_WHATSUP_USERNAME,password:process.env.REACT_APP_WHATSUP_PASSWORD});
          var whtoken ='';
          if(whatsupToken.data.JWTAUTH){
             whtoken =whatsupToken.data.JWTAUTH;

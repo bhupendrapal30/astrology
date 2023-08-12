@@ -99,7 +99,9 @@ const Login = () => {
  
  
   const date = new Date();
-  const formattedDate = date.toLocaleDateString('en-GB', {
+  var yesterday = new Date(date.getTime());
+   yesterday.setDate(date.getDate() - 1);
+  const formattedDate = yesterday.toLocaleDateString('en-GB', {
                 year: 'numeric',
                 month: '2-digit',
                 day: '2-digit',
@@ -151,7 +153,10 @@ const Login = () => {
                   <Field
                           type="date"
                           name="dob"
+                          data-date="" 
+                          data-date-format="DD MMMM YYYY"
                           max={formattedDate}
+                          
                           placeholder={t("Enter Date Of Birth")}
                           containerclass={"mb-3"}>
                     </Field>
@@ -215,7 +220,7 @@ const Login = () => {
                  
 
               
-                <div className="input-group two-groop">
+                <div className=" input-group rounded-0">
                   <span><i className="fa fa-whatsapp" aria-hidden="true" /></span>
 
                   <Field

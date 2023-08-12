@@ -7,6 +7,7 @@ import { Formik, Form, Field, ErrorMessage } from "formik";
 import { VerticalForm, FormInput } from "../../components/Ui";
 import AuthRequest from "../../APIRequest/AuthRequest";
 import { useSelector } from "react-redux";
+import Axios from 'axios';
 import QuestionRequest from "./../../APIRequest/QuestionRequest";
 import ToastMessage from "../../helpers/ToastMessage";
 
@@ -26,6 +27,7 @@ const Popup = (props) => {
    const myRefnamenew= useRef(null);
     const ref = useRef([]);
    const [checked, setChecked] = useState([]);
+   const [catName, setcatName] = useState('');
    
 
   console.log(props);
@@ -34,6 +36,7 @@ const Popup = (props) => {
   useEffect(() => {
     // EmployeeRequest.EmployeeList(1, 5, 0);
        QuestionRequest.QuestionLogin();
+       catNameData(props);
       //QuestionRequest.QuestionList(props.valCatId);
     // EmployeeRequest.StaffList();
   }, []);
@@ -93,6 +96,14 @@ const handleCheck = (event) => {
                ToastMessage.errorMessage("Please add your questions !!!");
             }
       }
+      const catNameData = async (props) => {
+       const API_URL =process.env.REACT_APP_API_URL+'user/';
+       const orderUrl = `${API_URL}getcategory`;
+       alert(props.valCatId);
+       const response = await Axios.post(orderUrl,{catId:props.valCatId});
+       console.log("--"+response);
+       setcatName(response.data.data.Name);
+     }
 
     
 
@@ -105,8 +116,6 @@ const handleCheck = (event) => {
         }
 
     }
-
-    console.log(QuestionLists);
 
     var checkData = QuestionLists.length>0?true:false;
 
@@ -121,7 +130,7 @@ const handleCheck = (event) => {
           {/* Modal content*/}
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title">Verify question</h4>
+              <h4 className="modal-title"><strong>{catName ? catName:""}</strong> Verify question</h4>
               <button type="button" className="close" data-dismiss="modal">×</button>
             </div>
             <div className="modal-body">

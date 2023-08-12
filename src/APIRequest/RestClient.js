@@ -8,7 +8,7 @@ import { RemoveUserDetails } from "../redux/slices/UserSlice";
 import store from "../redux/store/store";
 
 //Axios default setting
-axios.defaults.baseURL = "https://astrooffice.in:3300/api/";
+axios.defaults.baseURL = process.env.REACT_APP_ASTRO_OFFICE_API_URL;
 
 
 

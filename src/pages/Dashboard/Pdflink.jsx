@@ -1,7 +1,8 @@
 // @flow
 import React, { useEffect, useState ,createContext,useRef } from "react";
-
+import { format } from 'date-fns';
 import * as yup from "yup";
+import Axios from 'axios';
 import { Link } from 'react-router-dom';
 import { useTranslation } from "react-i18next";
 import { Formik, Form, Field, ErrorMessage } from "formik";
@@ -28,9 +29,11 @@ const Pdflink = () => {
 
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
+   const [orderDetails, setorderDetails] = useState('');
+   
   
 
-  
+   
   
   useEffect(() => {
     if(JSON.parse(localStorage.getItem('anspaidpdf'))=="1"){
@@ -39,7 +42,9 @@ const Pdflink = () => {
     }else {
      navigate("/pdf-products");
     }
+    orderdetails();
     QuestionRequest.PdfDownloadLink();
+    
     
   }, []);
   const { PdfListData, TotalQuestion } = useSelector(
@@ -48,6 +53,31 @@ const Pdflink = () => {
   if(PdfListData.length> 0){
     var pdflink =PdfListData[0].pdfpath;
   }
+
+  const orderdetails = async (e) => {
+    const API_URL =process.env.REACT_APP_API_URL+'user/';
+    
+     let userData = JSON.parse(localStorage.getItem("UserDetails"));
+     let user_id =0;
+     let userDetail=userData;
+     if(userDetail){
+      user_id =userDetail.user_id;
+     }
+     const orderUrl = `${API_URL}orderdeatils`;
+     const response = await Axios.post(orderUrl,{user_id:user_id});
+     //alert(response.data.data.length);
+     if(response.data.data.length > 0){
+      let orderdata= response.data.data[0];
+          orderdata.dob=format(new Date(orderdata.dob), 'dd MMM yyyy');
+          orderdata.tob=format(new Date('12/08/2023 '+orderdata.tob), 'hh:mm a');
+          
+      setorderDetails(response.data.data[0]);
+     }
+
+     
+     
+  }
+
 
 
   return (
@@ -61,6 +91,42 @@ const Pdflink = () => {
         </div>
      </div>
       <div className="col-sm-6 border-right border-white">
+       {orderDetails  ?
+       <table className="table table-bordered"  style={{color:"#fff"}}>
+        
+        <tbody>
+          <tr>
+            <th scope="row">ORDER ID</th>
+            <td>{orderDetails['order_id']}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">Amount</th>
+            <td>Rs {orderDetails['amount']}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">User Name</th>
+            <td>{orderDetails['name']}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">DOB</th>
+            <td colSpan={2}>{orderDetails['dob']}</td>
+           
+          </tr>
+          <tr>
+            <th scope="row">Time </th>
+            <td colSpan={2}>{orderDetails['tob']}</td>
+           
+          </tr>
+          <tr>
+            <th scope="row">Place </th>
+            <td colSpan={2}>{orderDetails['city']},{orderDetails['stateName']},{orderDetails['countryName']}</td>
+           
+          </tr>
+        </tbody>
+      </table> :'' }
     
     <div
       data-bs-spy="scroll"

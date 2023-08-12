@@ -123,7 +123,6 @@ class QuestionRequest {
      
      let postBody1 = JSON.parse(localStorage.getItem('quesData'));
      let catData =JSON.parse(localStorage.getItem('productData'));
-     console.log(catData.products);
      let postBody = {ques:postBody1 ,catIds:catData.products,user_id:user_id}
 
 
@@ -180,7 +179,6 @@ class QuestionRequest {
 
      let postBody1 = JSON.parse(localStorage.getItem('quesData'));
      let catData =JSON.parse(localStorage.getItem('productData'));
-     console.log(catData.products);
      let postBody = {ques:postBody1 ,catIds:catData.products,user_id:user_id}
 
     //let postBody={'test':"Hello"}

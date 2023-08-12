@@ -1,7 +1,7 @@
 import React, { useEffect } from "react";
-import { Navigate, Route, Routes, useRoutes } from "react-router-dom";
+import { Navigate, Route, Routes } from "react-router-dom";
 import { useSelector } from "react-redux";
-import * as layoutConstants from "../redux/slices/SettingSlice";
+// import * as layoutConstants from "../redux/slices/SettingSlice";
 
 // All layouts/containers
 import DefaultLayout from "../layouts/Default";
@@ -59,9 +59,9 @@ const LoadComponent = ({ component: Component }) => {
 };
 
 const AllRoutes = () => {
-   const { LayoutType } = useSelector((state) => state.Setting);
+   // const { LayoutType } = useSelector((state) => state.Setting);
    //console.log(LayoutType);
-  const { UserDetails } = useSelector((state) => state.User);
+ // const { UserDetails } = useSelector((state) => state.User);
   const { AccessToken } = useSelector((state) => state.Auth);
 
   const getLayout = () => {

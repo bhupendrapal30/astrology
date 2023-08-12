@@ -25,6 +25,8 @@ const Logout = () => {
       localStorage.removeItem('getToken');
       localStorage.removeItem('anspaidpdf');
       localStorage.removeItem('anspage');
+      localStorage.removeItem('quespdffile');
+      
      navigate("/account/login");
 
   }, []);
