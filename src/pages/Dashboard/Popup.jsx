@@ -28,15 +28,15 @@ const Popup = (props) => {
     const ref = useRef([]);
    const [checked, setChecked] = useState([]);
    const [catName, setcatName] = useState('');
-   
 
-  console.log(props);
-   
 
-  useEffect(() => {
+  // setcatName();
+   
+ useEffect(() => {
     // EmployeeRequest.EmployeeList(1, 5, 0);
+       //catNameData(props);
        QuestionRequest.QuestionLogin();
-       catNameData(props);
+       
       //QuestionRequest.QuestionList(props.valCatId);
     // EmployeeRequest.StaffList();
   }, []);
@@ -47,11 +47,7 @@ const Popup = (props) => {
 
   const addQuestions=(event)=>{
        const uniqueTags = [];
-   //      checked.map(val => {
-   //  if (uniqueTags.indexOf(val) === -1) {
-   //      uniqueTags.push(val)
-   //  }
-   // });
+   
    
 
   }
@@ -59,17 +55,7 @@ const Popup = (props) => {
   
 
 const handleCheck = (event) => {
-  // var updatedList = [...checked];
-  // if (event.target.checked) {
-  //   updatedList = [...checked, event.target.value];
-  // } else {
-  //   updatedList.splice(checked.indexOf(event.target.value), 1);
-  // }
-  // let objArry =[];
-
-  //  objArry[props.valCatId]=updatedList;
-  //  console.log(objArry);
-  // setChecked(updatedList);
+  
 };
 
     const initialValues = {
@@ -96,14 +82,7 @@ const handleCheck = (event) => {
                ToastMessage.errorMessage("Please add your questions !!!");
             }
       }
-      const catNameData = async (props) => {
-       const API_URL =process.env.REACT_APP_API_URL+'user/';
-       const orderUrl = `${API_URL}getcategory`;
-       alert(props.valCatId);
-       const response = await Axios.post(orderUrl,{catId:props.valCatId});
-       console.log("--"+response);
-       setcatName(response.data.data.Name);
-     }
+      
 
     
 
@@ -130,7 +109,7 @@ const handleCheck = (event) => {
           {/* Modal content*/}
           <div className="modal-content">
             <div className="modal-header">
-              <h4 className="modal-title"><strong>{catName ? catName:""}</strong> Verify question</h4>
+              <h4 className="modal-title"><strong>{props.categName ? props.categName:""}</strong> Verify question</h4>
               <button type="button" className="close" data-dismiss="modal">×</button>
             </div>
             <div className="modal-body">

@@ -24,7 +24,10 @@ const Products = (): React$Element<any> => {
      let user_id =0;
      let userDetail=userData;
      const [showdiv, setshowdiv] = useState(false);
-    const [isActive, setActive] = useState(false);
+     const [isActive, setActive] = useState(false);
+     const [categName, setcategName] = useState('');
+
+     
 
      
      let tokenVal =localStorage.getItem("AccessToken");
@@ -46,7 +49,7 @@ const Products = (): React$Element<any> => {
 
 
      const [show, setShow] = useState(false);
-     const [valCatId, setCatId] = useState(0);
+     const [valCatId, setvalCatId] = useState(0);
      const myRefname= useRef(null);
     const initialValues = {
        products: []
@@ -85,6 +88,8 @@ const Products = (): React$Element<any> => {
        setShow(true);
        
        let catId =e.target.value;
+        catNameData(catId);
+        setvalCatId(catId);
        //QuestionRequest.QuestionList(catId);
       const API_URL =process.env.REACT_APP_API_URL+'user/';
       e.preventDefault();
@@ -102,13 +107,14 @@ const Products = (): React$Element<any> => {
       
       
       if(response.data.status){
-         
+          setvalCatId(catId);
           QuestionRequest.QuestionList(catId);
-          setCatId(catId);
+          
           //hideLoder();
           myRefname.current.click();
 
       }else{
+        setvalCatId(catId);
         QuestionRequest.QuestionList(catId);
         myRefname.current.click();
         
@@ -119,7 +125,14 @@ const Products = (): React$Element<any> => {
   }
 
     
- 
+  const catNameData = async (catId) => {
+        
+       const API_URL =process.env.REACT_APP_API_URL+'user/';
+       const orderUrl = `${API_URL}getcategory`;
+       
+       const response = await Axios.post(orderUrl,{catId:catId});
+       setcategName(response.data.data.Name);
+  }
 
     return (
      
@@ -350,7 +363,7 @@ const Products = (): React$Element<any> => {
      </div>
     {
     show  ? 
-     <Popup valCatId={valCatId} setCatId={setCatId} showButton={showButton} />
+     <Popup valCatId={valCatId} setCatId={setvalCatId} categName={categName} showButton={showButton} />
      :''}
       
   
