@@ -166,10 +166,7 @@ rzp1.open();
         <div className="allWrapper">
           <header className="header" id="header">
         <div className="col-sm-12 ">
-          <div  className=" pull-right ">
-        
-          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
-        </div>
+          
      </div>
           </header>{/* end of header */}
           <section className="quiz_section" id="quizeSection">
@@ -184,6 +181,10 @@ rzp1.open();
               <div className="row">
                 <div className="col-sm-12">
                   <div className="quiz_content_area">
+                   <div className="homebutton text-center">
+        
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+        </div>
                     <h1 className="quiz_title text-white">Products name for pdf creation </h1>
                     <div className="row">
                       <div className="col-sm-3 col-6">
