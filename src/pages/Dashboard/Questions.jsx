@@ -89,14 +89,16 @@ rzp1.open();
 
   <div className="w3l-signinform">   <div className="container">
     <div className="col-sm-12 ">
-      <div  className=" pull-right ">
-        
-          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
-        </div>
+      
      </div>
-   
+    <div className="homebutton text-center">
+        
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+        </div>
     <div className="row">
+    
       <div className="col-sm-6 border-right border-white">
+
     
     <div
       data-bs-spy="scroll"

@@ -110,14 +110,14 @@ const Answer = () => {
   return (
   <div className="w3l-signinform">  
    <div className="container">
-   
+    <div className="homebutton text-center">
+        
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+        </div>
     <div className="row">
       <div className="col-sm-9 ">
       <div className="col-sm-12 ">
-      <div  className=" pull-right ">
-        
-          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
-        </div>
+      
      </div>
     
     <div
@@ -191,8 +191,8 @@ const Answer = () => {
         </tbody>
       </table> :'' }
       <div>
-      {file ?<Link to={file}><button type="button" class="btn btn-success">Download Pdf </button></Link>:
-      <button type="button" class="btn btn-success" onClick={generatePdf}>Generate Questions Pdf </button>}</div>
+      {file ?<Link to={file}><button type="button" class="btn btn-success">Download Pdf <i class="fa fa-file-pdf-o" aria-hidden="true"></i> </button></Link>:
+      <button type="button" class="btn btn-success" onClick={generatePdf}>Generate Pdf  <i class="fa fa-file-pdf-o" aria-hidden="true"></i></button>}</div>
    </div>
  
 </div>

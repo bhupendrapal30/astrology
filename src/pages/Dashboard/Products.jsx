@@ -142,10 +142,7 @@ const Products = (): React$Element<any> => {
         <div className="allWrapper">
           <header className="header" id="header">
              <div className="col-sm-12 ">
-          <div  className=" pull-right ">
-        
-          <Link to="/account/logout"><button className="btn btn-primary pull-right">Home</button></Link>
-        </div></div>
+          </div>
           </header>{/* end of header */}
           <section className="quiz_section" id="quizeSection">
             <div className="container">
@@ -159,6 +156,10 @@ const Products = (): React$Element<any> => {
               <div className="row">
                 <div className="col-sm-12">
                   <div className="quiz_content_area">
+                    <div className="homebutton text-center">
+        
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+        </div>
                     <h1 className="quiz_title text-white">Product name for Question creation</h1>
                     <div className="row">
                       <div className="col-sm-3 col-6">
@@ -186,7 +187,7 @@ const Products = (): React$Element<any> => {
                                 <i className="fa fa-blind" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> parent</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Parent</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -201,7 +202,7 @@ const Products = (): React$Element<any> => {
                                 <i className="fa fa-calendar" aria-hidden="true" />
                               </div>{/* end of quiz_card_media */}
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> date finder</h3>
+                                <h3><i className="fa fa-check" aria-hidden="true" /> Date Finder</h3>
                               </div>{/* end of quiz_card_title */}
                             </div>{/* end of quiz_card_content */}
                           </div>{/* end of single_quiz_card */}
@@ -239,7 +240,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="35" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="59" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
@@ -254,7 +255,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="40" />
+                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="65" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
@@ -269,7 +270,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="38" />
+                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="61" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
@@ -284,7 +285,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="82" />
+                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="75" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
@@ -314,7 +315,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="82" />
+                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="66" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
@@ -329,7 +330,7 @@ const Products = (): React$Element<any> => {
                       </div>{/* end of col3  */}
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox"  onClick={handleChange} value="44" />
+                          <Field className="quiz_checkbox" name="products" type="checkbox"  onClick={handleChange} value="63" />
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">

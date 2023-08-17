@@ -142,14 +142,15 @@ const Login = () => {
                   <Field
                     type="text"
                     name="name"
-                    placeholder={t("Name")}
+                    placeholder={t("Enter your name")}
                     containerclass={"mb-3"}
                     >
                   </Field>
                   <div className="errorformCls"><ErrorMessage name="name" /></div>
                 </div>
-                <div className="input-group rounded-0">
-                  <span><i className=" fa fa-calendar" aria-hidden="true" /></span>
+                <div className="input-group rounded-0 tooltip1">
+                  <i className="fa fa-calendar" aria-hidden="true"> </i><span className="dob-time tooltiptext"><label> Enter birth date</label></span>
+                  
                   <Field
                           type="date"
                           name="dob"
@@ -162,8 +163,9 @@ const Login = () => {
                     </Field>
                     <div className="errorformCls"><ErrorMessage name="dob"  /></div>
                 </div>
-                <div className="input-group rounded-0">
-                  <span><i className="fa fa-clock-o" aria-hidden="true" /></span>
+                <div className="input-group rounded-0 tooltip1">
+                <i className="fa fa-clock-o" aria-hidden="true" /><span className="dob-time tooltiptext"><label>Enter birth time</label></span>
+                 
                   <Field
                     type="time"
                     name="tob"
@@ -248,7 +250,7 @@ const Login = () => {
                  <option value="pdf">PDF</option>
               </Field>
            </div>
-                <button className="btn btn-primary btn-block" type="submit">Submit</button>
+                <button className="btn btn-primary btn-block" type="submit">Submit <i class="fa fa-arrow-circle-o-right" aria-hidden="true"></i></button>
               </Form>
       )}
     </Formik>

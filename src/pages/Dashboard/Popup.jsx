@@ -152,7 +152,7 @@ const handleCheck = (event) => {
         
             </Formik>
             </div> 
-            <div className="modal-footer">
+            <div className="modal-footer newBtn">
               <button type="button" className="btn btn-default" data-dismiss="modal" onClick={Unchecked}  >Close</button>
             </div>
           </div>
