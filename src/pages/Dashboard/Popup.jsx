@@ -132,9 +132,9 @@ const handleCheck = (event) => {
           <React.Fragment key={index}>     
           <div className="form-check" >
               
-           <Field className="form-check-input checkboxcls" name="questions" data-value={record.qid}  value={record.qid +'-'+record.ques}  type="checkbox" 
+           <Field className="form-check-input checkboxcls" id={"opt-in"+index} name="questions" data-value={record.qid}  value={record.qid +'-'+record.ques}  type="checkbox" 
  />
-                <label className="form-check-label" htmlFor="flexCheckDefault">
+                <label className="form-check-label" htmlFor="flexCheckDefault"  for={"opt-in"+index} >
                  <div style={{"fontWeight":"700"}} dataindex={index+1} dangerouslySetInnerHTML={{ __html: record.ques }} />
                  
                 </label>

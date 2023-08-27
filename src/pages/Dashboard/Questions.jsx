@@ -2,6 +2,7 @@
 import React, { useEffect, useState ,useRef } from "react";
 import Axios from 'axios';
 import { Link } from 'react-router-dom';
+import { format } from 'date-fns';
 
 
 import { useSelector } from "react-redux";
@@ -13,12 +14,14 @@ import { useNavigate } from "react-router-dom";
 
 
 
+
 const Questions = () => {
    const navigate = useNavigate();
    const key =process.env.REACT_APP_ROZAR_KEY;
 
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
+   const [userDetails, setuserDetails] = useState('');
    
    
    if(JSON.parse(localStorage.getItem('anspage'))=="1"){
@@ -28,13 +31,24 @@ const Questions = () => {
   
   useEffect(() => {
     QuestionRequest.QuestionListData();
-   
+    let userData = JSON.parse(localStorage.getItem("UserDetails"));
+    setuserDetails(userData);
+    
+    //userDetails.tob=format(new Date('12/08/2023 '+userDetails.tob), 'hh:mm a');
+    
+    
 
   }, []);
   const { QuestionListData, TotalQuestion } = useSelector(
     (state) => state.Question,
   );
   
+ // userDetails.dob=format(new Date(userDetails.dob), 'dd MMM yyyy');
+if(userDetails){
+
+  var dob =format(new Date(userDetails.dob), 'dd MMM yyyy');
+  var time =format(new Date('12/08/2023 '+userDetails.tob), 'hh:mm a');
+}
   
 
   const paymentHandler = async (e) => {
@@ -131,6 +145,33 @@ rzp1.open();
   </div>
 
  <div className="col-sm-6 text-center">
+ <table className="table table-bordered"  style={{color:"#fff"}}>
+        
+        <tbody>
+          
+          <tr>
+            <th scope="row">User Name</th>
+            <td>{userDetails['name']}</td>
+            
+          </tr>
+          <tr>
+            <th scope="row">DOB</th>
+            <td colSpan={2}>{dob}</td>
+           
+          </tr>
+          <tr>
+            <th scope="row">Time </th>
+            <td colSpan={2}>{time}</td>
+           
+          </tr>
+          <tr>
+            <th scope="row">Place </th>
+            <td colSpan={2}>{userDetails['city']},{userDetails['stateName']},{userDetails['countryName']}</td>
+           
+          </tr>
+        </tbody>
+      </table>
+      
         <h2 className="text-center text-white mb-2">Pay</h2>
         <div>
           <img src="images/qr.png" />
