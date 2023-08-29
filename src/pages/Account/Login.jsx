@@ -7,6 +7,7 @@ import { Link } from "react-router-dom";
 import * as yup from "yup";
 import { Formik, Form ,ErrorMessage, Field} from "formik"
 import { useTranslation } from "react-i18next";
+import ToastMessage from "../../helpers/ToastMessage";
 
 
 //Internal Lib Import
@@ -75,8 +76,13 @@ const Login = () => {
   const onSubmit = (formData) => {
     formData.latlong=latlong;
     formData.placeNew=placeVal;
-    console.log(formData);
-    AuthRequest.addUserData(formData);
+    if(placeVal!="" && latlong!=""){
+      AuthRequest.addUserData(formData);
+    }else{
+      ToastMessage.errorMessage("Please enter your birth place !!!");
+    }
+
+    
   };
    var placeData='';
    const onPlaceChange= async (e) => { 
@@ -161,7 +167,7 @@ const Login = () => {
   };
 
   const formatResult = (item) => {
-    console.log(item);
+    
     return (
       <div className="result-wrapper">
         <span className="result-span">id: {item.id}</span>

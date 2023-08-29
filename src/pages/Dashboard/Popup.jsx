@@ -36,6 +36,7 @@ const Popup = (props) => {
     // EmployeeRequest.EmployeeList(1, 5, 0);
        //catNameData(props);
        QuestionRequest.QuestionLogin();
+      
        
       //QuestionRequest.QuestionList(props.valCatId);
     // EmployeeRequest.StaffList();
@@ -66,8 +67,9 @@ const handleCheck = (event) => {
          questions: yup.array().required('At least select one question')
     })
       const onSubmit = (questions) => {
-
+           
             let questData = questions.questions;
+            
             if(questData.length > 0 ){
               let newQueArre =new Array();
               questData.forEach(function (value) {

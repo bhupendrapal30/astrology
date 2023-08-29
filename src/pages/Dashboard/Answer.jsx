@@ -45,6 +45,8 @@ const Answer = () => {
     
     if(localStorage.getItem("quespdffile")){
       setfile(localStorage.getItem("quespdffile"));
+    }else{
+      generatePdf();
     }
   
 
