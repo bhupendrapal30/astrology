@@ -31,6 +31,7 @@ const Products = (): React$Element<any> => {
 
      
      let tokenVal =localStorage.getItem("AccessToken");
+     let quesdataval =JSON.stringify(localStorage.getItem("quesData"));
      
      
       useEffect(() => {
@@ -41,7 +42,7 @@ const Products = (): React$Element<any> => {
         if(!tokenVal){
          window.location.reload();
         }
-        if(JSON.parse(localStorage.getItem("quesData")).length>0){
+        if(quesdataval.length > 0){
           showButton(true);
         }
        
