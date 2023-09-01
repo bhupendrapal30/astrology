@@ -261,6 +261,7 @@ const Login = () => {
             onSelect={handleOnSelect}
             onFocus={handleOnFocus}
             onClear={handleOnClear}
+            placeholder="Enter your birth city"
             showIcon={false}
             styling={{
               height: "34px",
@@ -274,7 +275,7 @@ const Login = () => {
               fontFamily: "Courier",
               iconColor: "white",
               lineColor: "lightgreen",
-              placeholderColor: "darkgreen",
+              placeholderColor: "white",
               clearIconMargin: "3px 8px 0 0",
               zIndex: 2,
             }}
