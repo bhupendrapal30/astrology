@@ -1074,7 +1074,42 @@ span.dob-time i {
     
    
   }
+
+  ._loading_overlay_overlay{
+    position: fixed !important;
+  }
+
+  .sc-dcJsrY {
+    position: relative !important;
+    height: 64px !important;
+  }
+
+  .sc-gEvEer {
+    background: #fff !important;
+
+  }
   
+
+ .wrapper {
+    border: 0 !important;
+    border-radius: 0 !important;
+    color: #000 !important;
+    background-color: transparent !important;
+}
+ input[type="text"], input[type="time"], input[type="email"], input[type="Password"], input[type="date"], input[type="number"], .sc-fqkvVR input {
+    font-size: 17px !important;
+    font-weight: 500 !important;
+    color: #fff !important;
+    text-align: left !important;
+    padding: 18px 18px 20px 42px !important;
+    width: 100% !important;
+    display: inline-block !important;
+    box-sizing: border-box !important;
+    border: none !important;
+    outline: none !important;
+    background: transparent !important;
+    letter-spacing: .5px !important;
+}
   
   
   
