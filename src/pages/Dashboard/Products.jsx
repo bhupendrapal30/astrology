@@ -131,7 +131,7 @@ const Products = (): React$Element<any> => {
       
     }else{
       setCount(count-= 1);
-      if(count === 1){
+      if(count === 0){
         showButton(false);
         }
       

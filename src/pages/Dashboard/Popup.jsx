@@ -81,7 +81,7 @@ const handleCheck = (event) => {
 
             console.log(questData.length);
             if(questData.length > 0 ){
-              alert('45')
+              
               let newQueArre =new Array();
               questData.forEach(function (value) {
                    let splival = value.split("-");
