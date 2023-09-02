@@ -26,6 +26,7 @@ const Products = (): React$Element<any> => {
      const [showdiv, setshowdiv] = useState(false);
      const [isActive, setActive] = useState(false);
      const [categName, setcategName] = useState('');
+     let [count, setCount] = useState(0);
 
      
 
@@ -85,10 +86,14 @@ const Products = (): React$Element<any> => {
 
     
     if(e.target.checked){
+
       showButton(false);
       setActive(true);
       ToastMessage.successMessage("Please wait....");
        setShow(true);
+       setCount(Number(count) + 1);
+
+       console.log(count);
        
        let catId =e.target.value;
         catNameData(catId);
@@ -123,6 +128,12 @@ const Products = (): React$Element<any> => {
         
       }
       setActive(false);
+      
+    }else{
+      setCount(count-= 1);
+      if(count === 1){
+        showButton(false);
+        }
       
     }
   }

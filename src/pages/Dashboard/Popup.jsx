@@ -53,7 +53,14 @@ const Popup = (props) => {
 
   }
 
+const checkQuestion=()=>{
+  let quesdataval =JSON.stringify(localStorage.getItem("quesData"));
+  if(quesdataval.length > 0){
+    props.showButton(true);
+  }
   
+
+}
 
 const handleCheck = (event) => {
   
@@ -67,15 +74,21 @@ const handleCheck = (event) => {
          questions: yup.array().required('At least select one question')
     })
       const onSubmit = (questions) => {
+             //console.log(props);
            
             let questData = questions.questions;
-            
+            let questStorewithkey={};
+
+            console.log(questData.length);
             if(questData.length > 0 ){
+              alert('45')
               let newQueArre =new Array();
               questData.forEach(function (value) {
                    let splival = value.split("-");
                    newQueArre.push(splival[0]);
               });
+              questStorewithkey[props.valCatId]=newQueArre;
+              console.log(questStorewithkey);
               localStorage.setItem('quesData', JSON.stringify(newQueArre));
               props.showButton(true);
               ToastMessage.successMessage("Added your questions successfully !!!");
@@ -95,7 +108,7 @@ const handleCheck = (event) => {
         for (let i = 0; i < lt; i++) {
          ref.current[i].checked = false;
         }
-
+        checkQuestion();
     }
 
     var checkData = QuestionLists.length>0?true:false;
@@ -112,7 +125,7 @@ const handleCheck = (event) => {
           <div className="modal-content">
             <div className="modal-header">
               <h4 className="modal-title"><strong>{props.categName ? props.categName:""}</strong> Verify question</h4>
-              <button type="button" className="close" data-dismiss="modal">×</button>
+              <button type="button" className="close" onClick={checkQuestion} data-dismiss="modal">×</button>
             </div>
             <div className="modal-body">
 
@@ -148,7 +161,7 @@ const handleCheck = (event) => {
               );
               })}
               
-              <div  ref={myRefnamenew} style={{display:"none"}}   data-dismiss="modal">Continue</div>
+              <div  ref={myRefnamenew} style={{display:"none"}}  data-dismiss="modal">Continue</div>
               <button className="quiz_continueBtn" type="submit"   >Continue</button>
               </Form>
         
