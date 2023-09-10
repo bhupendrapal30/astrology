@@ -54,8 +54,9 @@ const Popup = (props) => {
   }
 
 const checkQuestion=()=>{
-  let quesdataval =JSON.stringify(localStorage.getItem("quesData"));
-  if(quesdataval.length > 0){
+  var quesdataval =localStorage.getItem("quesData");
+  
+ if (quesdataval !== undefined && quesdataval != null) {
     props.showButton(true);
   }
   
@@ -78,8 +79,8 @@ const handleCheck = (event) => {
            
             let questData = questions.questions;
             let questStorewithkey={};
-
-            console.log(questData.length);
+            //console.log(questData);
+            //alert(questData.length);
             if(questData.length > 0 ){
               
               let newQueArre =new Array();
@@ -87,10 +88,40 @@ const handleCheck = (event) => {
                    let splival = value.split("-");
                    newQueArre.push(splival[0]);
               });
-              questStorewithkey[props.valCatId]=newQueArre;
-              console.log(questStorewithkey);
+              
+               var oldque =[];
+              if(localStorage.getItem('quesData')){
+                  oldque =  JSON.parse(localStorage.getItem('quesData'));
+              }
+             
+              var catvalueId = props.valCatId;
+             
+
+              var totalQues ={};
+              if((newQueArre.length) > oldque.length){
+                totalQues[catvalueId] =newQueArre.length -oldque.length;
+              }else{
+                totalQues[catvalueId] =oldque.length -newQueArre.length;
+              }
+              var oldqueobject ={};
+              if(localStorage.getItem('quesCatData')){
+                 oldqueobject =  JSON.parse(localStorage.getItem('quesCatData'));
+                 console.log(oldqueobject);
+                 var merged = {...oldqueobject, ...totalQues};
+              }else{
+                 var merged = totalQues;
+              }
+
+            
+                
+            console.log(totalQues);
+           
+              //localStorage.setItem('quesCatData', JSON.stringify(totalQues));
               localStorage.setItem('quesData', JSON.stringify(newQueArre));
+
+              localStorage.setItem('quesCatData', JSON.stringify(merged));
               props.showButton(true);
+              //Formik.resetForm();
               ToastMessage.successMessage("Added your questions successfully !!!");
               myRefnamenew.current.click();
             }else{
@@ -139,25 +170,26 @@ const handleCheck = (event) => {
               
               {QuestionLists?.map((record, index) => {
                         return (
-               
+             <React.Fragment key={index}>    
                 <>
             {
             record!=null ?
 
-          <React.Fragment key={index}>     
+             
           <div className="form-check" >
               
            <Field className="form-check-input checkboxcls" id={"opt-in"+index} name="questions" data-value={record.qid}  value={record.qid +'-'+record.ques}  type="checkbox" 
  />
-                <label className="form-check-label" htmlFor="flexCheckDefault"  for={"opt-in"+index} >
+                <label className="form-check-label" htmlFor="flexCheckDefault"  htmlFor={"opt-in"+index} >
                  <div style={{"fontWeight":"700"}} dataindex={index+1} dangerouslySetInnerHTML={{ __html: record.ques }} />
                  
                 </label>
               </div>
-              </React.Fragment>
+             
               :''
             }
             </>
+             </React.Fragment>
               );
               })}
               

@@ -42,6 +42,20 @@ const Questions = () => {
   const { QuestionListData, TotalQuestion } = useSelector(
     (state) => state.Question,
   );
+ 
+  var quesPrice =new Array();
+  QuestionListData.forEach(function (quesArr) {
+         var quesListArr=quesArr.ques;
+         quesListArr.forEach(function (ques) {
+          quesPrice.push(ques.price)
+        });
+  });
+  //   alert(quesPrice.length);
+  var pricetotal = 0;
+      for (var i = 0; i < quesPrice.length; i++) {
+          pricetotal += quesPrice[i]
+      } 
+
   
  // userDetails.dob=format(new Date(userDetails.dob), 'dd MMM yyyy');
 if(userDetails){
@@ -52,9 +66,9 @@ if(userDetails){
   
 
   const paymentHandler = async (e) => {
+
      let postBody1 = JSON.parse(localStorage.getItem('productData'));
-     let amount = (postBody1.products.length)*100;
-     
+     let amount = pricetotal;     
      const API_URL =process.env.REACT_APP_API_URL+'user/';
      e.preventDefault();
      let userData = JSON.parse(localStorage.getItem("UserDetails"));
@@ -95,7 +109,7 @@ rzp1.open();
 };
   
   var totalCat = JSON.parse(localStorage.getItem('productData'));
-  var totalamount = (totalCat.products.length)*100;
+  var totalamount = pricetotal;
   
 
   return (
@@ -107,7 +121,7 @@ rzp1.open();
      </div>
     <div className="homebutton text-center">
         
-          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i className="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
         </div>
     <div className="row">
     
@@ -123,11 +137,12 @@ rzp1.open();
     >
        {QuestionListData?.map((record, index) => {
                         return (
-             <>
+          <React.Fragment key={index}> 
+             
             {
             record!=null ?
-             <div className="removedivcls" key={index}>
-               <h4  className="catClass" ><b>{record.catName}</b></h4>
+             <div className="removedivcls">
+               <h4  className="catClass" ><i className="fa fa-comments" aria-hidden="true" /> {record.catName}</h4>
                {record.ques?.map((ques, index) => {
                         return (
                <div className="removeComma" dangerouslySetInnerHTML={{ __html: ques.ques }}></div>
@@ -135,7 +150,8 @@ rzp1.open();
              </div>
             :''
             }
-            </>
+           
+            </React.Fragment> 
       )
               })}
       

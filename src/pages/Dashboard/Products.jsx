@@ -25,14 +25,21 @@ const Products = (): React$Element<any> => {
      let userDetail=userData;
      const [showdiv, setshowdiv] = useState(false);
      const [isActive, setActive] = useState(false);
-     const [categName, setcategName] = useState('');
+     const [categName, setcategName] = useState();
+     const [cateListData, setcateListData] = useState([]);
      let [count, setCount] = useState(0);
+     var [queCount, setqueCount] = useState(false);
+
+
 
      
 
+     
+    
      
      let tokenVal =localStorage.getItem("AccessToken");
      let quesdataval =JSON.stringify(localStorage.getItem("quesData"));
+      
      
      
       useEffect(() => {
@@ -40,14 +47,14 @@ const Products = (): React$Element<any> => {
         if( userDetail && userDetail.atype=='pdf'){
            navigate("/pdf-products");
         }
-        if(!tokenVal){
-         window.location.reload();
-        }
-        if(quesdataval.length > 0){
-          showButton(true);
-        }
-       
         
+
+        
+       
+        catListData();
+        if( JSON.parse(localStorage.getItem('quesCatData'))){
+            setqueCount(JSON.parse(localStorage.getItem('quesCatData')));
+        }
        
     }, []);
 
@@ -87,14 +94,14 @@ const Products = (): React$Element<any> => {
     
     if(e.target.checked){
 
+      console.log(e.currentTarget.checked);
+
       showButton(false);
       setActive(true);
       ToastMessage.successMessage("Please wait....");
        setShow(true);
        setCount(Number(count) + 1);
 
-       console.log(count);
-       
        let catId =e.target.value;
         catNameData(catId);
         setvalCatId(catId);
@@ -148,8 +155,21 @@ const Products = (): React$Element<any> => {
        setcategName(response.data.data.Name);
   }
 
+  const catListData = async () => {
+        
+       const API_URL =process.env.REACT_APP_API_URL+'user/';
+       const catUrl = `${API_URL}getQuesCategory`;
+       
+       const response = await Axios.post(catUrl,{});
+       if(response.data.data.length > 0){
+        setcateListData(response.data.data);
+       }
+  }
+  
+  var cateListDataarray =cateListData;
     return (
      
+
      <>
        <LoadingOverlay active={isActive} spinner text='Loading your content...'></LoadingOverlay> 
     <div className="w3l-signinform">
@@ -172,191 +192,50 @@ const Products = (): React$Element<any> => {
                   <div className="quiz_content_area">
                     <div className="homebutton text-center">
         
-          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i className="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
         </div>
                     <h1 className="quiz_title text-white">Product name for Question creation</h1>
                     <div className="row">
+                     
+              {cateListDataarray?.map((record, index) => {
+                        return (
+                       <React.Fragment key={index}> 
+                     {
+                      
+                      
+
+
+                      
                       <div className="col-sm-3 col-6">
                         <div className="quiz_card_area">
-                          <Field className="quiz_checkbox"   name="products" onClick={handleChange}  type="checkbox"  value="57" />
+                          <Field className="quiz_checkbox" id={index}   name="products" onClick={handleChange}  type="checkbox"  value={`${record['apiId']}`} />
                          
                           <div className="single_quiz_card">
                             <div className="quiz_card_content">
                               <div className="quiz_card_icon">
-                                <i className="fa fa-comments" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
+                                <i className={ 'fa '+ record['img']} aria-hidden="true" />
+                                {record['apiId']=="58" ? <i className="fa fa-caret-up text-succes" aria-hidden="true" />:""}
+                                {record['apiId']=="59" ? <i className="fa fa-caret-down text-danger" aria-hidden="true" />:""}
+                                
+                                
+
+                              </div>
                               <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> General</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="68" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-blind" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Parent</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="1" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-calendar" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Date Finder</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox" value="64" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-heartbeat" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Health</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="62" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-car" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Vehicle</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="59" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-inr" aria-hidden="true" /><i className="fa fa-caret-down text-danger" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Bad Wealth</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" onClick={handleChange} type="checkbox"  value="65" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-child" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Child</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="61" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-users" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Married life</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="75" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-home" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> House</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="58" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-inr" aria-hidden="true" /><i className="fa fa-caret-up text-success" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Good wealth</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox" onClick={handleChange}  value="66" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-suitcase" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Occupation</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
-                      <div className="col-sm-3 col-6">
-                        <div className="quiz_card_area">
-                          <Field className="quiz_checkbox" name="products" type="checkbox"  onClick={handleChange} value="63" />
-                          <div className="single_quiz_card">
-                            <div className="quiz_card_content">
-                              <div className="quiz_card_icon">
-                                <i className="fa fa-plane" aria-hidden="true" />
-                              </div>{/* end of quiz_card_media */}
-                              <div className="quiz_card_title">
-                                <h3><i className="fa fa-check" aria-hidden="true" /> Foreign Trip</h3>
-                              </div>{/* end of quiz_card_title */}
-                            </div>{/* end of quiz_card_content */}
-                          </div>{/* end of single_quiz_card */}
-                        </div>{/* end of quiz_card_area */}
-                      </div>{/* end of col3  */}
+                                <h3><i className="fa fa-check" aria-hidden="true" /> {record['Name']} 
+                                {queCount[record['apiId']] ? 
+                                <span>({(queCount[record['apiId']])})</span>:""}</h3>
+                              </div>
+                            </div>
+                          </div>
+                        </div>
+                      </div>
+                   
+
+                 }
+                </React.Fragment>  
+                   )
+              })}
+                      
                       <div className="col-sm-12">
                         <div className="quiz_next">
                            <div  ref={myRefname} style={{display:"none"}}   data-toggle="modal"  data-target="#myModal">Continue</div>

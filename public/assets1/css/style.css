@@ -1114,6 +1114,49 @@ span.dob-time i {
 .sc-fqkvVR input {
     padding: 18px 18px 20px 28px !important;
 }
+.removedivcls{
+    border: double;
+    margin-bottom: 20px;
+    padding:15px !important;
+}
   
+
+input[type="date"]{
+    color: #000000 !important;
+}
+
+.input-container input {
+    border: none;
+    box-sizing: border-box;
+    outline: 0;
+    padding: .75rem;
+    position: relative;
+    width: 100%;
+}
+
+input[type="date"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
   
+input[type="time"]::-webkit-calendar-picker-indicator {
+    background: transparent;
+    bottom: 0;
+    color: transparent;
+    cursor: pointer;
+    height: auto;
+    left: 0;
+    position: absolute;
+    right: 0;
+    top: 0;
+    width: auto;
+}
   

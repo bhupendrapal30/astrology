@@ -8,6 +8,8 @@ import { Row, Col } from "react-bootstrap";
 import AccountLayout from "./AccountLayout";
 import logoutIcon from "../../assets/images/logout-icon.svg";
 import { useNavigate } from "react-router-dom"; 
+import { useDispatch } from "react-redux";
+import { SetLogout } from "../../redux/slices/AuthSlice";
 
 
 
@@ -15,7 +17,10 @@ const Logout = () => {
 
 
      const navigate = useNavigate();
+     const dispatch = useDispatch();
+  
      useEffect(() => {
+      dispatch(SetLogout());
       
       localStorage.removeItem('UserDetails');
       localStorage.removeItem('productCat');

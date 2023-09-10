@@ -114,7 +114,7 @@ const Answer = () => {
    <div className="container">
     <div className="homebutton text-center">
         
-          <Link to="/account/logout"><button className="btn btn-info homebutton"><i class="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
+          <Link to="/account/logout"><button className="btn btn-info homebutton"><i className="fa fa-home fa-1" aria-hidden="true"></i> Home</button></Link>
         </div>
     <div className="row">
       <div className="col-sm-9 ">
