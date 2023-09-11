@@ -88,6 +88,14 @@ const Products = (): React$Element<any> => {
         setshowdiv(val);
     };
 
+
+    const questionsCountval =() => {
+        
+       if( JSON.parse(localStorage.getItem('quesCatData'))){
+            setqueCount(JSON.parse(localStorage.getItem('quesCatData')));
+        }
+    };
+
     const handleChange  = async (e) => {
 
 
@@ -257,7 +265,7 @@ const Products = (): React$Element<any> => {
      </div>
     {
     show  ? 
-     <Popup valCatId={valCatId} setCatId={setvalCatId} categName={categName} showButton={showButton} />
+     <Popup valCatId={valCatId} setCatId={setvalCatId} categName={categName} showButton={showButton} questionsCountval= {questionsCountval} />
      :''}
       
   

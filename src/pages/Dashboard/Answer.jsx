@@ -31,6 +31,8 @@ const Answer = () => {
    const [checked, setChecked] = useState([]);
    const [orderDetails, setorderDetails] = useState('');
    const [file, setfile] = useState('');
+   const [cateListData, setcateListData] = useState([]);
+   
    //localStorage.setItem('anspage', JSON.stringify("1"));
 
   useEffect(() => {
@@ -42,6 +44,7 @@ const Answer = () => {
     }
     orderdetails();
     QuestionRequest.AnswerListData();
+    catListData();
     
     if(localStorage.getItem("quespdffile")){
       setfile(localStorage.getItem("quespdffile"));
@@ -106,7 +109,26 @@ const Answer = () => {
   
   
   
- 
+ var catObjs ={};
+ const catListData = async () => {
+        
+       const API_URL =process.env.REACT_APP_API_URL+'user/';
+       const catUrl = `${API_URL}getQuesCategory`;
+       
+       const response = await Axios.post(catUrl,{});
+       if(response.data.data.length > 0){
+           response.data.data.forEach(function (cat) {
+            catObjs[cat.Name] =cat.img;
+
+           });
+
+
+        setcateListData(catObjs);
+       }
+  }
+  
+  var cateListDataarray =cateListData;
+  
   
 
   return (
@@ -135,7 +157,7 @@ const Answer = () => {
             {
             record!=null ?
              <div className="removedivcls" key={index}>
-               <h4  className="catClass" >{record.catName}</h4>
+               <h4  className="catClass" ><i className={ 'fa '+cateListDataarray[record.catName]} aria-hidden="true" /> {record.catName}</h4>
                {record.ques?.map((ques, index) => {
                         return (
                            <>

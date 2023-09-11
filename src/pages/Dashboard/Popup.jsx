@@ -114,13 +114,13 @@ const handleCheck = (event) => {
 
             
                 
-            console.log(totalQues);
            
               //localStorage.setItem('quesCatData', JSON.stringify(totalQues));
               localStorage.setItem('quesData', JSON.stringify(newQueArre));
 
               localStorage.setItem('quesCatData', JSON.stringify(merged));
               props.showButton(true);
+              props.questionsCountval();
               //Formik.resetForm();
               ToastMessage.successMessage("Added your questions successfully !!!");
               myRefnamenew.current.click();

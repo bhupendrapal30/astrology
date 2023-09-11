@@ -22,17 +22,22 @@ const Questions = () => {
    const ref = useRef([]);
    const [checked, setChecked] = useState([]);
    const [userDetails, setuserDetails] = useState('');
+   const [cateListData, setcateListData] = useState([]);
    
    
    if(JSON.parse(localStorage.getItem('anspage'))=="1"){
        navigate("/answers");
    }
-   
+
+   if( JSON.parse(localStorage.getItem('quesCatData'))){
+       localStorage.removeItem('quesCatData');
+    }
   
   useEffect(() => {
     QuestionRequest.QuestionListData();
     let userData = JSON.parse(localStorage.getItem("UserDetails"));
     setuserDetails(userData);
+    catListData();
     
     //userDetails.tob=format(new Date('12/08/2023 '+userDetails.tob), 'hh:mm a');
     
@@ -107,9 +112,33 @@ if(userDetails){
 const rzp1 = new window.Razorpay(options);
 rzp1.open();
 };
+
+ var catObjs ={};
+ const catListData = async () => {
+        
+       const API_URL =process.env.REACT_APP_API_URL+'user/';
+       const catUrl = `${API_URL}getQuesCategory`;
+       
+       const response = await Axios.post(catUrl,{});
+       if(response.data.data.length > 0){
+           response.data.data.forEach(function (cat) {
+            catObjs[cat.Name] =cat.img;
+
+           });
+
+
+        setcateListData(catObjs);
+       }
+  }
+  
+  var cateListDataarray =cateListData;
   
   var totalCat = JSON.parse(localStorage.getItem('productData'));
   var totalamount = pricetotal;
+
+
+
+
   
 
   return (
@@ -142,7 +171,7 @@ rzp1.open();
             {
             record!=null ?
              <div className="removedivcls">
-               <h4  className="catClass" ><i className="fa fa-comments" aria-hidden="true" /> {record.catName}</h4>
+               <h4  className="catClass" ><i className={ 'fa '+cateListDataarray[record.catName]} aria-hidden="true" /> {record.catName} {record.apiId}</h4>
                {record.ques?.map((ques, index) => {
                         return (
                <div className="removeComma" dangerouslySetInnerHTML={{ __html: ques.ques }}></div>

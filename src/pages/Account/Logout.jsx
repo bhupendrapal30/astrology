@@ -31,6 +31,7 @@ const Logout = () => {
       localStorage.removeItem('anspaidpdf');
       localStorage.removeItem('anspage');
       localStorage.removeItem('quespdffile');
+      localStorage.removeItem('quesCatData');
       
      navigate("/account/login");
 
